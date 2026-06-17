@@ -1,26 +1,108 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
+@custom-variant dark (&:is(.dark *));
+
+/* Pathway design tokens */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --basecamp-ink: #16241d;
+  --topo-paper: #efe8d8;
+  --trail-blaze: #e2862f;
+  --switchback-gold: #d9b23c;
+  --contour-sage: #7a9b76;
+  --slate-fog: #8b9a91;
+
+  --background: var(--topo-paper);
+  --foreground: var(--basecamp-ink);
+  --card: #f7f3eb;
+  --card-foreground: var(--basecamp-ink);
+  --popover: #f7f3eb;
+  --popover-foreground: var(--basecamp-ink);
+  --primary: var(--trail-blaze);
+  --primary-foreground: #fffaf3;
+  --secondary: var(--contour-sage);
+  --secondary-foreground: var(--basecamp-ink);
+  --muted: #e4ddd0;
+  --muted-foreground: var(--slate-fog);
+  --accent: var(--switchback-gold);
+  --accent-foreground: var(--basecamp-ink);
+  --destructive: #c44d3a;
+  --border: color-mix(in srgb, var(--slate-fog) 35%, transparent);
+  --input: color-mix(in srgb, var(--slate-fog) 45%, transparent);
+  --ring: var(--trail-blaze);
+  --chart-1: var(--trail-blaze);
+  --chart-2: var(--switchback-gold);
+  --chart-3: var(--contour-sage);
+  --chart-4: var(--slate-fog);
+  --chart-5: var(--basecamp-ink);
+  --radius: 0.625rem;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-basecamp-ink: var(--basecamp-ink);
+  --color-topo-paper: var(--topo-paper);
+  --color-trail-blaze: var(--trail-blaze);
+  --color-switchback-gold: var(--switchback-gold);
+  --color-contour-sage: var(--contour-sage);
+  --color-slate-fog: var(--slate-fog);
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-data);
+  --font-heading: var(--font-display);
+  --color-sidebar-ring: var(--ring);
+  --color-sidebar-border: var(--border);
+  --color-sidebar-accent-foreground: var(--accent-foreground);
+  --color-sidebar-accent: var(--accent);
+  --color-sidebar-primary-foreground: var(--primary-foreground);
+  --color-sidebar-primary: var(--primary);
+  --color-sidebar-foreground: var(--foreground);
+  --color-sidebar: var(--card);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  :focus-visible {
+    outline-color: var(--trail-blaze);
+  }
 }

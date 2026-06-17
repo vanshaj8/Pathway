@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  password  String
+  name      String?
+  createdAt DateTime  @default(now())
+  journeys  Journey[]
+}
+
+model Journey {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  category    String?
+  createdAt   DateTime  @default(now())
+  topics      Topic[]
+  attempts    Attempt[]
+}
+
+model Topic {
+  id        String  @id @default(cuid())
+  journeyId String
+  journey   Journey @relation(fields: [journeyId], references: [id], onDelete: Cascade)
+  title     String
+  order     Int     @default(0)
+  tasks     Task[]
+}
+
+model Task {
+  id           String         @id @default(cuid())
+  topicId      String
+  topic        Topic          @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  title        String
+  description  String?
+  externalLink String?
+  order        Int            @default(0)
+  progress     TaskProgress[]
+}
+
+model Attempt {
+  id            String         @id @default(cuid())
+  journeyId     String
+  journey       Journey        @relation(fields: [journeyId], references: [id], onDelete: Cascade)
+  attemptNumber Int
+  startDate     DateTime       @default(now())
+  endDate       DateTime?
+  status        String         @default("active")
+  progress      TaskProgress[]
+}
+
+model TaskProgress {
+  id          String    @id @default(cuid())
+  attemptId   String
+  attempt     Attempt   @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  taskId      String
+  task        Task      @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  completed   Boolean   @default(false)
+  completedAt DateTime?
+  notes       String?
+
+  @@unique([attemptId, taskId])
+}
